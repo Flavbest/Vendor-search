@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        .segment {
+            margin-bottom: 20px;
+            display: none;
+        }
+        .segment h3 {
+            margin-bottom: 10px;
+        }
+        .solutions {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .solution {
+            margin: 5px;
+            flex: 1 1 45%;
+        }
+        input[type="text"], input[type="button"], button {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .autocomplete-suggestions {
+            border: 1px solid #ccc;
+            max-height: 150px;
+            overflow-y: auto;
+            position: absolute;
+            background: #fff;
+        }
+        .autocomplete-suggestion {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .autocomplete-suggestion:hover {
+            background: #eee;
+        }
+        .vendor-logo {
+            display: inline-block;
+            width: 100px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .vendor-name {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        button.segment-toggle {
+            padding: 15px;
+            margin: 10px 0;
+            width: 100%;
+            font-size: 18px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vendor Search</h1>
+        <input type="text" id="solutionInput" placeholder="Enter a solution">
+        <div id="autocomplete-suggestions" class="autocomplete-suggestions"></div>
+        <input type="button" value="Search" onclick="searchVendors()">
+
+        <button class="segment-toggle" onclick="toggleSegment('cyberSecurity')">Cyber Security</button>
+        <button class="segment-toggle" onclick="toggleSegment('dataInfrastructure')">Data Infrastructure</button>
+        <button class="segment-toggle" onclick="toggleSegment('advancedNetworking')">Advanced Networking</button>
+        <button class="segment-toggle" onclick="toggleSegment('cloud')">Cloud</button>
+
+        <div id="cyberSecurity" class="segment">
+            <h2>Cyber Security</h2>
+            <h3>Network Security</h3>
+            <div class="solutions">
+                <label class="solution">
+                    <input type="checkbox" value="Next Generation Firewall (NGFW)"> Next Generation Firewall (NGFW)
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Network Access Control (NAC)"> Network Access Control (NAC)
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Zero Trust Microsegmentation"> Zero Trust Microsegmentation
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Advanced Threat Prevention (SandBox)"> Advanced Threat Prevention (SandBox)
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="SSL Visibility"> SSL Visibility
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="DNS Security"> DNS Security
+                </label>
+            </div>
+            <h3>Identity Governance and Authentication (IGA)</h3>
+            <div class="solutions">
+                <label class="solution">
+                    <input type="checkbox" value="Privileged Access Management (PAM)"> Privileged Access Management (PAM)
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Identity and Access Management (IAM)"> Identity and Access Management (IAM)
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Single Sign-On (SSO)"> Single Sign-On (SSO)
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Multi-Factor Authentication (MFA)"> Multi-Factor Authentication (MFA)
+                </label>
+            </div>
+            <h3>Endpoint / Host Security</h3>
+            <div class="solutions">
+                <label class="solution">
+                    <input type="checkbox" value="Mobile Device Security"> Mobile Device Security
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="End Point Protection Platform (EPP)"> End Point Protection Platform (EPP)
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Patch Management"> Patch Management
+                </label>
+            </div>
+            <h3>Application Security</h3>
+            <div class="solutions">
+                <label class="solution">
+                    <input type="checkbox" value="Web Application Firewall (WAF)"> Web Application Firewall (WAF)
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="API Security"> API Security
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Application Delivery Controller (ADC)"> Application Delivery Controller (ADC)
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="App Testing and Code Review"> App Testing and Code Review
+                </label>
+            </div>
+        </div>
+
+        <div id="dataInfrastructure" class="segment">
+            <h2>Data Infrastructure</h2>
+            <h3>Computing and Storage</h3>
+            <div class="solutions">
+                <label class="solution">
+                    <input type="checkbox" value="Workstation, Desktops, Laptops"> Workstation, Desktops, Laptops
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Rack and Blade Servers"> Rack and Blade Servers
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Hyperconverged Infrastructure (HCI)"> Hyperconverged Infrastructure (HCI)
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Traditional Storage"> Traditional Storage
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="All Flash Storage"> All Flash Storage
+                </label>
+            </div>
+            <h3>Data Protection</h3>
+            <div class="solutions">
+                <label class="solution">
+                    <input type="checkbox" value="NextGen Backup Solutions"> NextGen Backup Solutions
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Multi-cloud Backup Solutions"> Multi-cloud Backup Solutions
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Business Continuity Solutions"> Business Continuity Solutions
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="DRaaS"> Disaster Recovery as a Service (DRaaS)
+                </label>
+            </div>
+            <h3>Operation Visibility and Tools</h3>
+            <div class="solutions">
+                <label class="solution">
+                    <input type="checkbox" value="Application Performance Monitor (APM)"> Application Performance Monitor (APM)
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Network Monitoring and Management"> Network Monitoring and Management
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Assessment and Discovery Tools"> Assessment and Discovery Tools
+                </label>
+            </div>
+        </div>
+
+        <div id="advancedNetworking" class="segment">
+            <h2>Advanced Networking</h2>
+            <h3>Collaboration Solutions</h3>
+            <div class="solutions">
+                <label class="solution">
+                    <input type="checkbox" value="IP Telephony"> IP Telephony
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Video Conferencing"> Video Conferencing
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Unified Wireless Solutions"> Unified Wireless Solutions
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Cloud WiFi"> Cloud WiFi
+                </label>
+            </div>
+            <h3>Software Defined Network</h3>
+            <div class="solutions">
+                <label class="solution">
+                    <input type="checkbox" value="Data Center Switching"> Data Center Switching
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Campus Switching"> Campus Switching
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="WAN and SD-WAN"> WAN and SD-WAN
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Network TAP Solution"> Network TAP Solution
+                </label>
+            </div>
+            <h3>Core Network Services</h3>
+            <div class="solutions">
+                <label class="solution">
+                    <input type="checkbox" value="Network Time Protocol (NTP)"> Network Time Protocol (NTP)
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="DNS, DHCP and IP Management"> DNS, DHCP and IP Management
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Network Performance Monitoring"> Network Performance Monitoring
+                </label>
+            </div>
+        </div>
+
+        <div id="cloud" class="segment">
+            <h2>Cloud</h2>
+            <h3>Cloud Services</h3>
+            <div class="solutions">
+                <label class="solution">
+                    <input type="checkbox" value="Backup as a Service (BaaS)"> Backup as a Service (BaaS)
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="DRaaS"> Disaster Recovery as a Service (DRaaS)
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Email Security as a Service"> Email Security as a Service
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Firewall as a Service (FWaaS)"> Firewall as a Service (FWaaS)
+                </label>
+            </div>
+            <h3>Cloud Professional Services</h3>
+            <div class="solutions">
+                <label class="solution">
+                    <input type="checkbox" value="Cloud Consultancy"> Cloud Consultancy
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Cloud Deployment"> Cloud Deployment
+                </label>
+                <label class="solution">
+                    <input type="checkbox" value="Cloud Migration"> Cloud Migration
+                </label>
+            </div>
+        </div>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        const solutionsVendors = {
+            "Next Generation Firewall (NGFW)": ["Palo Alto Networks", "Fortinet"],
+            "Network Access Control (NAC)": ["Forescout", "Cisco"],
+            "Zero Trust Microsegmentation": ["Palo Alto Networks", "Illumio"],
+            "Advanced Threat Prevention (SandBox)": ["Palo Alto Networks", "Trend Micro"],
+            "SSL Visibility": ["Blue Coat", "Gigamon"],
+            "DNS Security": ["Infoblox", "Cisco"],
+            "Privileged Access Management (PAM)": ["Delinea", "BeyondTrust"],
+            "Identity and Access Management (IAM)": ["SailPoint", "Okta"],
+            "Single Sign-On (SSO)": ["Okta", "Microsoft"],
+            "Multi-Factor Authentication (MFA)": ["Duo Security", "RSA"],
+            "Mobile Device Security": ["Ivanti", "VMware"],
+            "End Point Protection Platform (EPP)": ["CrowdStrike", "Kaspersky"],
+            "Patch Management": ["Ivanti", "SolarWinds"],
+            "Web Application Firewall (WAF)": ["Imperva", "F5"],
+            "API Security": ["Cisco", "Fortinet"],
+            "Application Delivery Controller (ADC)": ["F5", "Citrix"],
+            "App Testing and Code Review": ["Synopsys", "Checkmarx"],
+            "Workstation, Desktops, Laptops": ["Dell", "HP", "Lenovo"],
+            "Rack and Blade Servers": ["Dell", "HP", "Lenovo"],
+            "Hyperconverged Infrastructure (HCI)": ["Nutanix", "VMware"],
+            "Traditional Storage": ["NetApp", "Dell EMC"],
+            "All Flash Storage": ["Pure Storage", "Dell EMC"],
+            "NextGen Backup Solutions": ["Veeam", "Commvault"],
+            "Multi-cloud Backup Solutions": ["Veeam", "Commvault"],
+            "Business Continuity Solutions": ["Zerto", "Veeam"],
+            "DRaaS": ["Zerto", "Veeam"],
+            "Application Performance Monitor (APM)": ["Dynatrace", "AppDynamics"],
+            "Network Monitoring and Management": ["SolarWinds", "Nagios"],
+            "Assessment and Discovery Tools": ["Qualys", "Rapid7"],
+            "IP Telephony": ["Cisco", "Avaya"],
+            "Video Conferencing": ["Zoom", "Microsoft Teams"],
+            "Unified Wireless Solutions": ["Cisco", "Aruba"],
+            "Cloud WiFi": ["Cisco Meraki", "Ruckus"],
+            "Data Center Switching": ["Cisco", "Juniper"],
+            "Campus Switching": ["Cisco", "Aruba"],
+            "WAN and SD-WAN": ["Cisco", "VMware"],
+            "Network TAP Solution": ["Gigamon", "Ixia"],
+            "Network Time Protocol (NTP)": ["Microsemi", "Meinberg"],
+            "DNS, DHCP and IP Management": ["Infoblox", "BlueCat"],
+            "Network Performance Monitoring": ["Riverbed", "SolarWinds"],
+            "Backup as a Service (BaaS)": ["Veeam", "Commvault"],
+            "Email Security as a Service": ["Proofpoint", "Mimecast"],
+            "Firewall as a Service (FWaaS)": ["Palo Alto Networks", "Fortinet"],
+            "Cloud Consultancy": ["Deloitte", "Accenture"],
+            "Cloud Deployment": ["AWS", "Microsoft Azure"],
+            "Cloud Migration": ["AWS", "Microsoft Azure"]
+        };
+
+        const solutions = Object.keys(solutionsVendors);
+
+        function toggleSegment(segmentId) {
+            const segment = document.getElementById(segmentId);
+            segment.style.display = segment.style.display === 'none' ? 'block' : 'none';
+        }
+
+        document.getElementById('solutionInput').addEventListener('input', function() {
+            const input = this.value.toLowerCase().trim();
+            const suggestionsDiv = document.getElementById('autocomplete-suggestions');
+            suggestionsDiv.innerHTML = '';
+            if (input) {
+                const suggestions = solutions.filter(solution => solution.toLowerCase().includes(input));
+                suggestions.forEach(suggestion => {
+                    const suggestionDiv = document.createElement('div');
+                    suggestionDiv.className = 'autocomplete-suggestion';
+                    suggestionDiv.innerText = suggestion;
+                    suggestionDiv.addEventListener('click', function() {
+                        document.getElementById('solutionInput').value = suggestion;
+                        suggestionsDiv.innerHTML = '';
+                    });
+                    suggestionsDiv.appendChild(suggestionDiv);
+                });
+            }
+        });
+
+        function searchVendors() {
+            const checkedSolutions = Array.from(document.querySelectorAll('.solutions input:checked')).map(input => input.value);
+            const inputSolution = document.getElementById('solutionInput').value.trim();
+
+            const allSolutions = new Set([...checkedSolutions, inputSolution]);
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+
+            allSolutions.forEach(solution => {
+                const vendors = solutionsVendors[solution];
+                if (vendors) {
+                    const solutionResult = document.createElement('p');
+                    solutionResult.innerHTML = `Vendors supporting '<strong>${solution}</strong>': `;
+                    vendors.forEach(vendor => {
+                        const vendorDiv = document.createElement('div');
+                        vendorDiv.innerHTML = `<img src="images/vendors/${vendor.replace(/ /g, '_')}.png" alt="${vendor}" class="vendor-logo"><span class="vendor-name">${vendor}</span>`;
+                        solutionResult.appendChild(vendorDiv);
+                    });
+                    resultDiv.appendChild(solutionResult);
+                } else {
+                    const solutionResult = document.createElement('p');
+                    solutionResult.innerHTML = `No vendors found for the solution '<strong>${solution}</strong>'.`;
+                    resultDiv.appendChild(solutionResult);
+                }
+            });
+        }
+
+        // Ensure all segments are initially hidden
+        document.addEventListener("DOMContentLoaded", function() {
+            const segments = document.querySelectorAll('.segment');
+            segments.forEach(segment => {
+                segment.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
